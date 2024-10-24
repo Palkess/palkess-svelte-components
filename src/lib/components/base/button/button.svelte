@@ -25,7 +25,8 @@
         ...rest
     }: ButtonProps = $props();
 
-    let buttonClasses = $state<string[]>([]);
+    // Classes are evaluated when the component is mounted, no reactivity.
+    let buttonClasses: string[] = [];
 
     if (theme) {
         switch (theme) {
@@ -85,3 +86,23 @@
 <button class={twMerge(buttonClasses.join(' '), cssClass)} {type} {disabled} {onclick} {...rest}>
     {@render children()}
 </button>
+
+<!--
+@component
+Custom button component with Tailwind CSS classes.
+
+### Props
+@prop `class` - (string): Tailwind classes to be applied to the button. Merges with the default classes.
+@prop `type` - ('button' | 'submit' | 'reset'): Button type attribute.
+@prop `theme` - ('primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'): Button theme.
+@prop `style` - ('none' | 'outline' | 'solid'): Button style.
+@prop `size` - ('xs' | 'sm' | 'md' | 'lg'): Button size.
+@prop `disabled` - (boolean): Button disabled state.
+@prop `onclick` - (() => void): Button click event handler.
+@prop `children` - (Snippet): Button content.
+
+### Example
+```svelte
+<Button theme="primary" style="solid" size="md" onclick={() => console.log('clicked')}>Click me</Button>
+```
+-->
